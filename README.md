@@ -2,6 +2,8 @@
 
 This program aims to minitor the SMS messages received from Air780E USB devices on Linux. The program also supports sending SMS messages.
 
+> 简体中文请参考 [README-zh.md](README-zh.md)
+
 # Features
 
 - [x] Retrieving historic SMS messages stored in the SIM card
