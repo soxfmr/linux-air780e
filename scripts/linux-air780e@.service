@@ -1,0 +1,14 @@
+[Unit]
+Description=Run linux-air780e startup script for %I
+After=network.target
+Requires=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/linux-air780e
+ExecStart=/linux-air780e/run.sh /dev/tty%i
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

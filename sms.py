@@ -154,7 +154,7 @@ class SMSModule:
 
         return "OK" in data
 
-    def monitor_sms(self, callback) -> None:
+    def monitor_sms(self, callback, delete_after_read = False) -> None:
         while not self.exit_event.is_set():
             line = self.serial_port.readline().decode(errors='ignore').strip()
             if not line:
@@ -166,6 +166,9 @@ class SMSModule:
                 index = line.split(",")[-1].strip()
                 if sms := self.read_sms(index):
                     callback(sms)
+
+                    if delete_after_read:
+                        self.delete_sms(index)
 
     def close(self):
         self.exit_event.set()
