@@ -89,6 +89,27 @@ The country code (`+44` for UK) of the phone number is required.
 
 **Currently, sending SMS messages on a monitored device is not supported.** You should stop any running instance before sending a message.
 
+## Systemd Unit
+
+```bash
+# change the path to the top-level dir of this project in the systemd unit file
+sed -i 's|/linux-air780e|WorkingDirectory=YOUR_PROJECT_ROOT_PATH|g' scripts/linux-air780e@.service
+
+# add any extra arguments as needed
+# vim scripts/run.sh
+
+cp scripts/linux-air780e@.service /etc/systemd/system/linux-air780e@.service
+sudo systemctl daemon-reload
+
+# enable the services based on the device name that matches /dev/ttyACM*
+# we created services here for two devices respectively
+sudo systemctl enable --now linux-air780e@ACM0.service
+sudo systemctl enable --now linux-air780e@ACM5.service
+
+# show running log
+sudo journalctl -u linux-air780e@ACM0.service -f
+```
+
 ## Thanks
 
 - [SMS-PDU Decoder](https://github.com/qotto/smspdudecoder)

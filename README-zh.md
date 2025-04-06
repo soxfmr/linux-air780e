@@ -85,6 +85,26 @@ python main.py send -p /dev/ttyACM5 -n +4412345678 \
 
 **在发送短信之前，需要停止其他所有监听程序实例**，否则将无法正常发送短信。
 
+## 系统服务（Systemd Unit）
+
+```bash
+# 替换项目根路径
+sed -i 's|/linux-air780e|WorkingDirectory=YOUR_PROJECT_ROOT_PATH|g' scripts/linux-air780e@.service
+
+# 根据需求添加运行参数
+# vim scripts/run.sh
+
+cp scripts/linux-air780e@.service /etc/systemd/system/linux-air780e@.service
+sudo systemctl daemon-reload
+
+# 分别为 `/dev/ttyACM0` 和 `/dev/ttyACM5` 两个设备创建服务
+sudo systemctl enable --now linux-air780e@ACM0.service
+sudo systemctl enable --now linux-air780e@ACM5.service
+
+# 显示运行日志
+sudo journalctl -u linux-air780e@ACM0.service -f
+```
+
 ## 特别感谢 
 
 - [SMS-PDU Decoder](https://github.com/qotto/smspdudecoder)

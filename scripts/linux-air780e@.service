@@ -2,11 +2,12 @@
 Description=Run linux-air780e startup script for %I
 After=network.target
 Requires=network.target
+After=sys-subsystem-usb-serial-devices-tty%i.device
 
 [Service]
 Type=simple
 WorkingDirectory=/linux-air780e
-ExecStart=/linux-air780e/run.sh /dev/tty%i
+ExecStart=/linux-air780e/scripts/run.sh /dev/tty%i
 Restart=on-failure
 RestartSec=5s
 
